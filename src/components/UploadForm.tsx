@@ -3,6 +3,7 @@ import { useRef } from 'react';
 
 import styles from './UploadForm.module.css';
 import { upload } from '@/git';
+import { extensions } from '@/constants';
 import UploadButton from '@/components/UploadButton';
 
 export default function UploadForm() {
@@ -26,7 +27,7 @@ export default function UploadForm() {
         </div>
         <div className={styles.form_row}>
           <label htmlFor="image">image</label>
-          <input id="image" name="image" type="file" accept=".jpg,.jpeg,.png,.gif,.svg,.webp,.avif" />
+          <input id="image" name="image" type="file" accept={extensions.join(',')} />
         </div>
         <div className={styles.form_row}>
           <UploadButton />

@@ -12,12 +12,7 @@ import http from 'isomorphic-git/http/node';
 
 const pfs = fs.promises;
 
-const git_path = '.git-repo';
-
-const author = {
-  name: 'Jakub T. Jankiewicz',
-  email: 'jcubic@onet.pl',
-};
+import { git_path, author, mimes, ImageFilename, extension_re } from './constants';
 
 function init_repo() {
   if (!fs.existsSync(git_path)) {
@@ -42,31 +37,32 @@ function update_repo() {
   });
 }
 
+function filter_images(filenames: string[]): ImageFilename[] {
+  return filenames.filter(function(filename) {
+    return filename.match(extension_re);
+  }) as ImageFilename[];
+}
+
+function valid_mime(file: File) {
+  return (mimes as ReadonlyArray<string>).includes(file.type);
+}
+
 export const get_images = nextCache(cache(async function get_images() {
   await init_repo();
   await update_repo();
-  return git.listFiles({ fs, dir: git_path });
+  return filter_images(await git.listFiles({ fs, dir: git_path }));
 }), [], {
   tags: ['read']
 });
 
-const images = [
-  'image/jpeg',
-  'image/png',
-  'image/gif',
-  'image/svg+xml',
-  'image/webp',
-  'image/avif'
-];
-
 export async function upload(form: FormData) {
   const payload = Object.fromEntries(form.entries());
   const uploadSchema = z.object({
-    image: z.instanceof(File).refine((file) => images.includes(file.type), {
+    image: z.instanceof(File).refine(valid_mime, {
       message: 'Invalid image file type',
     }),
     message: z.string().min(1, 'Message cannot be empty'),
-    filename: z.string().regex(/^.*\.[^.]+$/, 'Invalid filename format')
+    filename: z.string().regex(extension_re, 'Invalid filename format')
   });
 
   const { filename, message, image } = uploadSchema.parse(payload);
