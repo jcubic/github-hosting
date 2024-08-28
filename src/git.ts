@@ -4,6 +4,7 @@ import path from 'path';
 
 import { cache } from 'react';
 import { unstable_cache as nextCache } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 import {z} from 'zod';
 import git from 'isomorphic-git';
@@ -42,7 +43,6 @@ function update_repo() {
 }
 
 export const get_images = nextCache(cache(async function get_images() {
-  console.log('read images');
   await init_repo();
   await update_repo();
   return git.listFiles({ fs, dir: git_path });
@@ -88,4 +88,5 @@ export async function upload(form: FormData) {
     dir: git_path,
     onAuth: () => ({ username: process.env.GITHUB_TOKEN })
   });
+  revalidateTag('read');
 }

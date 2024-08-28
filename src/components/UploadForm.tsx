@@ -1,6 +1,5 @@
 'use client';
 import { useRef } from 'react';
-import { revalidatePath } from 'next/cache';
 import { useRouter } from 'next/navigation';
 
 import styles from './UploadForm.module.css';
@@ -12,9 +11,8 @@ export default function UploadForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   async function uploadAction(formData: FormData) {
-    await upload(formData);
     formRef.current?.reset();
-    router.refresh();
+    await upload(formData);
   }
 
   return (
