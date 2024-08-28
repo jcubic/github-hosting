@@ -64,7 +64,10 @@
   content: ":";
 }
 
-.form_row input {
+.form_row input:not([type]) {
   padding: 4px 8px;
+}
+
+.form_row input {
   font-size: 1em;
 }
