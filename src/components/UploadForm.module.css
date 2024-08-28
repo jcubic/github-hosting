@@ -1,0 +1,37 @@
+.form {
+  width: 600px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #0A3048;
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.form_row label {
+  display: inline-block;
+  width: 200px;
+  margin-right: 1ch;
+  text-align: right;
+}
+
+.form_row label::after {
+  content: ":";
+}
+
+.form_row input:not([type]) {
+  padding: 4px 8px;
+}
+
+.form_row input {
+  font-size: 1em;
+}
+
+.form_row button {
+  margin-left: calc(200px + 1ch);
+  padding: 4px 8px;
+  font-size: 1.1em;
+}

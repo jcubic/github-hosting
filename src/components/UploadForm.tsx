@@ -1,0 +1,40 @@
+'use client';
+import { useRef } from 'react';
+import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
+
+import styles from './UploadForm.module.css';
+import { upload } from '@/git';
+
+export default function UploadForm() {
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  async function uploadAction(formData: FormData) {
+    await upload(formData);
+    formRef.current?.reset();
+    router.refresh();
+  }
+
+  return (
+    <div className={styles.form}>
+      <form action={uploadAction} ref={formRef}>
+        <div className={styles.form_row}>
+          <label htmlFor="message">message</label>
+          <input id="message" name="message" />
+        </div>
+        <div className={styles.form_row}>
+          <label htmlFor="filename">filename</label>
+          <input id="filename" name="filename" />
+        </div>
+        <div className={styles.form_row}>
+          <label htmlFor="image">image</label>
+          <input id="image" name="image" type="file" />
+        </div>
+        <div className={styles.form_row}>
+          <button>Upload</button>
+        </div>
+      </form>
+    </div>
+  );
+}
