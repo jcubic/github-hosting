@@ -5,6 +5,9 @@ import styles from './Gallery.module.css';
 
 export default async function Gallery() {
   const images = await get_images();
+  if (images.length === 0) {
+    return <p>No images</p>;
+  }
   return (
     <ul className={styles.gallery}>
       {images.map(file => {
