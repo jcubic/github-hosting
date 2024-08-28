@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import styles from './UploadForm.module.css';
 import { upload } from '@/git';
+import UploadButton from '@/components/UploadButton';
 
 export default function UploadForm() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function UploadForm() {
           <input id="image" name="image" type="file" />
         </div>
         <div className={styles.form_row}>
-          <button>Upload</button>
+          <UploadButton />
         </div>
       </form>
     </div>
