@@ -1,13 +1,11 @@
 'use client';
 import { useRef } from 'react';
-import { useRouter } from 'next/navigation';
 
 import styles from './UploadForm.module.css';
 import { upload } from '@/git';
 import UploadButton from '@/components/UploadButton';
 
 export default function UploadForm() {
-  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
 
   async function uploadAction(formData: FormData) {
@@ -28,7 +26,7 @@ export default function UploadForm() {
         </div>
         <div className={styles.form_row}>
           <label htmlFor="image">image</label>
-          <input id="image" name="image" type="file" />
+          <input id="image" name="image" type="file" accept=".jpg,.jpeg,.png,.gif,.svg,.webp,.avif" />
         </div>
         <div className={styles.form_row}>
           <UploadButton />

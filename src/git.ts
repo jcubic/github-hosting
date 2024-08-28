@@ -50,10 +50,21 @@ export const get_images = nextCache(cache(async function get_images() {
   tags: ['read']
 });
 
+const images = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/svg+xml',
+  'image/webp',
+  'image/avif'
+];
+
 export async function upload(form: FormData) {
   const payload = Object.fromEntries(form.entries());
   const uploadSchema = z.object({
-    image: z.instanceof(File),
+    image: z.instanceof(File).refine((file) => images.includes(file.type), {
+      message: 'Invalid image file type',
+    }),
     message: z.string().min(1, 'Message cannot be empty'),
     filename: z.string().regex(/^.*\.[^.]+$/, 'Invalid filename format')
   });
