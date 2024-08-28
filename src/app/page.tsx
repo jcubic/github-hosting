@@ -20,6 +20,23 @@ export default async function Home() {
           );
         })}
       </ul>
+      <h2>Upload form</h2>
+      <div className={styles.form}>
+        <form>
+          <div className={styles.form_row}>
+            <label htmlFor="message">message</label>
+            <input id="message" name="message" />
+          </div>
+          <div className={styles.form_row}>
+            <label htmlFor="filename">filename</label>
+            <input id="filename" name="filename" />
+          </div>
+          <div className={styles.form_row}>
+            <label htmlFor="image">image</label>
+            <input id="image" name="image" type="file" />
+          </div>
+        </form>
+      </div>
     </main>
   );
 }

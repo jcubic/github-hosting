@@ -2,12 +2,13 @@
   width: 900px;
   margin: 0 auto;
   display: flex;
+  gap: 1em;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.main h1 {
+.main h1, .main h2 {
   margin: 0.5em 0;
 }
 
@@ -37,4 +38,33 @@
 
 .gallery img {
   object-fit: contain;
+}
+
+.form {
+  width: 600px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #0A3048;
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.form_row label {
+  display: inline-block;
+  width: 200px;
+  margin-right: 1ch;
+  text-align: right;
+}
+
+.form_row label::after {
+  content: ":";
+}
+
+.form_row input {
+  padding: 4px 8px;
+  font-size: 1em;
 }
